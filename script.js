@@ -8,60 +8,63 @@ var started=false;
    if(!started){
         newSequence();
     started=true;}
-   
+  
     })
 //user pressed
 $(".btn").click(function(){
 playing(this.id);
-
 checkPatten(this.id);
 
 })
 
 //create patten
 function newSequence(){
-  
+    userPatten=[];
     var randomNumber=Math.floor(Math.random()*4);
 
     patten.push(colors[randomNumber]);
     $("#"+colors[randomNumber]).fadeIn(100).fadeOut(100).fadeIn(100);
     makeSound(colors[randomNumber]);
     $("h1").text("LEVEL  "+patten.length)
+  
     //then need to wait for user press
 }
 
 
-
+//checking the patten entred by user
 function checkPatten(e){
   
-   userPatten.push(e)
+userPatten.push(e)
 var currebtLevel=(userPatten.length)-1;
-console.log(currebtLevel);
+
+
+
 if(userPatten[currebtLevel]===patten[currebtLevel]){
 
 if(userPatten.length===patten.length){
-    userPatten=[];
+   
     setTimeout(function(){
         newSequence();
     },1000);}
 }
 else{
+
 $("body").addClass("game-over");
  setTimeout(()=>{
     $("body").removeClass("game-over");},200);
     $("h1").text("Game Over,press any key to re-start");
     makeSound("wrong");
-    $(document).keypress(()=>{startOver();
-        console.log(patten);
-    })
+   
+        startOver();
+   
+   
    }
 
 }
 
-
+//re-start the game
 function startOver(){
 patten=[];
-userPatten=[];
 started=false;
 }
 
@@ -90,8 +93,7 @@ function makeSound(e){
                     wrongAudio.play();
                     break;
 
-        default:
-            break;
+       
     }
 }
 function makeAnimation(e){
